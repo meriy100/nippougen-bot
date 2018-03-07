@@ -4,6 +4,7 @@ import Web.Slack
 import Web.Slack.Message
 import System.Environment (lookupEnv)
 import Data.Maybe (fromMaybe)
+import Data.Text
 import Control.Applicative
 
 myConfig :: String -> SlackConfig
@@ -12,7 +13,7 @@ myConfig apiToken = SlackConfig
          }
 
 echoBot :: SlackBot ()
-echoBot (Message cid _ msg _ _ _) = sendMessage cid msg
+echoBot (Message cid _ msg _ _ _) = sendMessage cid (pack "今日の作業内容")
 echoBot _ = return ()
 
 main :: IO ()
