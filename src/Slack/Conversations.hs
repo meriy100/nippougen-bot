@@ -25,11 +25,9 @@ instance FromJSON SlackPayload where
     parseJSON _          = mempty
 
 
-history :: String -> String -> IO ()
 history token channel = do
-  request <- parseUrlThrow $ concat ["https://slack.com/api/conversations.history?token=", token, "&channel=", channel, "&pretty="]
+  request <- parseUrlThrow $ concat ["https://slack.com/api/conversations.history?token=", token, "&channel=", channel, "&pretty=1"]
   res <- httpLBS request
   let json = decode (getResponseBody res) :: Maybe SlackPayload
   case json of
-    Nothing -> putStrLn "parsing failed"
-    Just json -> print json
+    Just json -> return json
